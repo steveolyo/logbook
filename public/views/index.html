@@ -1,0 +1,34 @@
+<html5>
+    <head>
+        <title>Logbook</title>
+        <script type="text/javascript" src="../bower_components/jquery/dist/jquery.js"></script>
+        <link rel="stylesheet" type="text/css" href="/views/logbook.css">
+
+    </head>
+    <h1>Logbook</h1>
+
+    <div>
+        <div>
+            entry1:<input type="text" id="entry1" name="entry1" value="initial"/>
+        </div>
+        <input type="button" id="getdata" value="get data from iris"/>
+    </div>
+    <div>
+        <div>
+            entry2:<span style="width:500px; height:500px">
+                    <input type="textarea" rows="100" id="entry2" name="entry2" value="initial mongo"/>
+        </span>
+        </div>
+        <input type="button" id="getmongodata" value="get data from mongo"/>
+    </div>
+
+    <div class="container" id="pile">
+        <table id="logpage">
+
+        </table>
+
+    </div>
+    <script type="text/javascript" src="../js/logbook.js">
+
+    </script>
+</html5>

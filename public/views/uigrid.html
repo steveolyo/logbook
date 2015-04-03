@@ -1,0 +1,57 @@
+<html5>
+    <head>
+        <title>Logbook</title>
+        <script src="../bower_components/webcomponentsjs/webcomponents.min.js"></script>
+        <script type="text/javascript" src="../bower_components/jquery/dist/jquery.js"></script>
+        <link rel="stylesheet" type="text/css" href="/views/logbook.css">
+        <link rel="stylesheet"
+              href="../bower_components/sortable-table/css/bootstrap.css" shim-shadowdom>
+        <link rel="import" href="../bower_components/sortable-table/sortable-table.html">
+    </head>
+    <h1>Logbook</h1>
+    <template>
+
+        <sortable-table class="bootstrap">
+
+            <datatables-ajax
+                    url="/logpolydata"
+                    data="{{data}}"
+                    dataSize="{{dataSize}}"
+                    loading="{{loading}}"
+                    start="{{start}}"
+                    length="{{length}}"
+                    sortColumn="{{sortColumn}}"
+                    sortDescending="{{sortDescending}}"
+                    filters="{{filters}}"
+                    filterOps="{{filterOps}}"
+                    columns='[
+				{"name":"first_name"},
+				{"name":"last_name"},
+				{"name":"position"},
+				{"name":"office"},
+				{"name":"start_date"},
+				{"name":"salary"}
+			]'
+                    >
+
+            </datatables-ajax>
+
+        </sortable-table>
+
+    </template>
+    <div>
+        <div>
+            entry2:<span style="width:500px; height:500px">
+                    <input type="textarea" rows="100" id="entry2" name="entry2" value="initial mongo"/>
+        </span>
+        </div>
+        <input type="button" id="getlogdatafrommongo" value="get data from mongo"/>
+    </div>
+
+    <div class="container" id="pile">
+        <table id="logpage">
+
+        </table>
+
+    </div>
+</html5>
