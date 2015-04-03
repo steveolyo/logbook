@@ -1,57 +1,60 @@
-<html5>
-    <head>
-        <title>Logbook</title>
-        <script src="../bower_components/webcomponentsjs/webcomponents.min.js"></script>
-        <script type="text/javascript" src="../bower_components/jquery/dist/jquery.js"></script>
-        <link rel="stylesheet" type="text/css" href="/views/logbook.css">
-        <link rel="stylesheet"
-              href="../bower_components/sortable-table/css/bootstrap.css" shim-shadowdom>
-        <link rel="import" href="../bower_components/sortable-table/sortable-table.html">
-    </head>
-    <h1>Logbook</h1>
-    <template>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sortable Table using Polymer Web Components</title>
 
-        <sortable-table class="bootstrap">
+    <script src="../bower_components/webcomponentsjs/webcomponents.min.js"></script>
+    <link rel="import" href="../bower_components/sortable-table/datatables-ajax.html">
+    <link rel="import" href="../bower_components/sortable-table/examples/json-stringify.html">
+    <link rel="import" href="../bower_components/sortable-table/examples/project-docs.html">
+    <link rel="import" href="../bower_components/sortable-table/sortable-table.html">
+    <link rel="import" href="../bower_components/sortable-table/examples/serverside/column-filters.html">
+    <style shim-shadowdom>
+        .paramType { color: #526E9C }
+        sortable-table.datatables::shadow td.column-first_name,
+        sortable-table.datatables::shadow td.column-last_name,
+        sortable-table.datatables::shadow td.column-position,
+        sortable-table.datatables::shadow td.column-office,
+        sortable-table.datatables::shadow td.column-start_date,
+        sortable-table.datatables::shadow td.column-salary {
+            padding-right: 5px;
+            width: 250px;
+            vertical-align: middle;
+        }
+        sortable-table.datatables::shadow td.column-start_date {
+            text-align: center;
+        }
+        sortable-table.datatables::shadow td.column-salary {
+            text-align: right;
+        }
+    </style>
+</head>
+<body unresolved is="project-docs">
 
-            <datatables-ajax
-                    url="/logpolydata"
-                    data="{{data}}"
-                    dataSize="{{dataSize}}"
-                    loading="{{loading}}"
-                    start="{{start}}"
-                    length="{{length}}"
-                    sortColumn="{{sortColumn}}"
-                    sortDescending="{{sortDescending}}"
-                    filters="{{filters}}"
-                    filterOps="{{filterOps}}"
-                    columns='[
-				{"name":"first_name"},
-				{"name":"last_name"},
-				{"name":"position"},
-				{"name":"office"},
-				{"name":"start_date"},
-				{"name":"salary"}
-			]'
-                    >
 
-            </datatables-ajax>
+<template is="auto-binding">
+    <sortable-table
+            class="datatables default"
+            footerTemplate="defaultPager"
+            filterTemplate="fullFilters"
+            pageSize="10"
+            loading="{{loading}}"
+            >
+        <sortable-column name="first_name">Date</sortable-column>
+        <sortable-column name="last_name">Last</sortable-column>
+        <sortable-column name="position">Position</sortable-column>
+        <sortable-column name="office">Office</sortable-column>
+        <sortable-column name="start_date">Start Date</sortable-column>
+        <sortable-column name="salary">Salary</sortable-column>
 
-        </sortable-table>
+        <datatables-ajax role="datasource" url="../logdata"></datatables-ajax>
+    </sortable-table>
 
-    </template>
-    <div>
-        <div>
-            entry2:<span style="width:500px; height:500px">
-                    <input type="textarea" rows="100" id="entry2" name="entry2" value="initial mongo"/>
-        </span>
-        </div>
-        <input type="button" id="getlogdatafrommongo" value="get data from mongo"/>
-    </div>
+    <p>
 
-    <div class="container" id="pile">
-        <table id="logpage">
+        Data is loading = {{loading}}
+</template>
 
-        </table>
 
-    </div>
-</html5>
+</body>
+</html>
