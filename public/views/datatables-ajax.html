@@ -2,39 +2,12 @@
 <html>
 <head>
     <title>Sortable Table using Polymer Web Components</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <script src="../bower_components/webcomponentsjs/webcomponents.min.js"></script>
     <link rel="import" href="../bower_components/sortable-table/datatables-ajax.html">
     <link rel="import" href="../bower_components/sortable-table/examples/json-stringify.html">
     <link rel="import" href="../bower_components/sortable-table/examples/project-docs.html">
     <link rel="import" href="../bower_components/sortable-table/sortable-table.html">
     <link rel="import" href="../bower_components/sortable-table/examples/serverside/column-filters.html">
-    <style shim-shadowdom>
-        .paramType {
-            color: #526E9C
-        }
-
-        sortable-table.datatables::shadow td.column-first_name,
-        sortable-table.datatables::shadow td.column-last_name,
-        sortable-table.datatables::shadow td.column-position,
-        sortable-table.datatables::shadow td.column-office,
-        sortable-table.datatables::shadow td.column-start_date,
-        sortable-table.datatables::shadow td.column-salary {
-            padding-right: 5px;
-            width: 250px;
-            vertical-align: middle;
-        }
-
-        sortable-table.datatables::shadow td.column-start_date {
-            text-align: center;
-        }
-
-        sortable-table.datatables::shadow td.column-salary {
-            text-align: right;
-        }
-    </style>
 </head>
 <body unresolved is="project-docs">
 
@@ -46,23 +19,15 @@
             filterTemplate="fullFilters"
             pageSize="10"
             loading="{{loading}}"
-            columns='[
-			{"name":"first_naame"},
-			{"name":"last_name"},
-			{"name":"position"},
-			{"name":"office"},
-			{"name":"start_date"},
-			{"name":"salary"}
-		]'
             >
-        <!--<sortable-column name="first_name">Firsst</sortable-column>
-            <sortable-column name="last_name">Last</sortable-column>
-            <sortable-column name="position">Position</sortable-column>
-            <sortable-column name="office">Office</sortable-column>
-            <sortable-column name="start_date" formula="function(v){ return (new Date(v * 1000)).toString().substring(4,15); }">Start Date</sortable-column>
-            <sortable-column name="salary" formula="function(v){ return '$' + v; }">Salary</sortable-column>
--->
-        <datatables-ajax role="datasource" url="/logpolydata"></datatables-ajax>
+        <sortable-column name="first_name">First</sortable-column>
+        <sortable-column name="last_name">Last</sortable-column>
+        <sortable-column name="position">Position</sortable-column>
+        <sortable-column name="office">Office</sortable-column>
+        <sortable-column name="start_date" formula="function(v){ return (new Date(v * 1000)).toString().substring(4,15); }">Start Date</sortable-column>
+        <sortable-column name="salary" formula="function(v){ return '$' + v; }">Salary</sortable-column>
+
+        <datatables-ajax role="datasource" url="../logpolydata"></datatables-ajax>
     </sortable-table>
 
     <p>
