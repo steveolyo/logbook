@@ -1,13 +1,8 @@
-# [HTML5 Boilerplate](http://html5boilerplate.com)
+# [Logbook ](http://giamungo.com)
 
-HTML5 Boilerplate is a professional front-end template for building fast,
-robust, and adaptable web apps or sites.
+Logbook is a pilots logbook with data stored in the cloud.
 
-This project is the product of many years of iterative development and combined
-community knowledge. It does not impose a specific development philosophy or
-framework, so you're free to architect your code in the way that you want.
-
-* Source: [https://github.com/h5bp/html5-boilerplate](https://github.com/h5bp/html5-boilerplate)
+* Source: [https://github.com/steveolyo/logbook](https://github.com/steveolyo/logbook)
 * Homepage: [http://html5boilerplate.com](http://html5boilerplate.com)
 * Twitter: [@h5bp](http://twitter.com/h5bp)
 
