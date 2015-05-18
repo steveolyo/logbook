@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    //http://files.stevenskelton.ca/sortable-table/examples/serverside/extjs-ajax.html
+    <title>Sortable Table using Polymer Web Components</title>
+
+    <script src="../bower_components/webcomponentsjs/webcomponents.min.js"></script>
+    <link rel="import" href="../bower_components/sortable-table/datatables-ajax.html">
+    <link rel="import" href="../bower_components/sortable-table/examples/json-stringify.html">
+    <link rel="import" href="../bower_components/sortable-table/examples/project-docs.html">
+    <link rel="import" href="../bower_components/sortable-table/sortable-table.html">
+    <link rel="import" href="../bower_components/sortable-table/examples/serverside/column-filters.html">
+    <style shim-shadowdom>
+        .paramType { color: #526E9C }
+        sortable-table.datatables::shadow td.column-first_name,
+        sortable-table.datatables::shadow td.column-last_name,
+        sortable-table.datatables::shadow td.column-position,
+        sortable-table.datatables::shadow td.column-office,
+        sortable-table.datatables::shadow td.column-start_date,
+        sortable-table.datatables::shadow td.column-salary {
+            padding-right: 5px;
+            width: 250px;
+            vertical-align: middle;
+        }
+        sortable-table.datatables::shadow td.column-start_date {
+            text-align: center;
+        }
+        sortable-table.datatables::shadow td.column-salary {
+            text-align: right;
+        }
+    </style>
+</head>
+<body unresolved is="project-docs">
+
+
+<template is="auto-binding">
+    <sortable-table
+            rowTemplate = "rowEditorTemplate"
+            class="datatables default"
+            footerTemplate="defaultPager"
+            filterTemplate="fullFilters"
+            <!--pageSize="10"-->
+            loading="{{loading}}"
+            >
+        <sortable-column name="first_name">Datee</sortable-column>
+        <sortable-column name="last_name">Last</sortable-column>
+        <sortable-column name="position">Position</sortable-column>
+        <sortable-column name="office">Office</sortable-column>
+        <sortable-column name="start_date">Start Date</sortable-column>
+        <sortable-column name="salary">Salary</sortable-column>
+
+        <datatables-ajax
+                role="datasource"
+                url="../logdata"
+                data="{{data}}"
+                dataSize="{{dataSize}}"
+                loading="{{loading}}"
+                start="{{start}}"
+                length="{{length}}"
+                sortColumn="{{sortColumn}}"
+                sortDescending="{{sortDescending}}"
+                filters="{{filters}}"
+                filterOps="{{filterOps}}"
+>
+
+                </datatables-ajax>
+    </sortable-table>
+
+    <p>
+
+        Data is loading = {{loading}}
+</template>
+
+
+</body>
+</html>

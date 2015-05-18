@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html ng-app="logbookapp">
+    <head>
+        <title>Logbook</title>
+        <script src="../bower_components/angular/angular.js"></script>
+        <script type="text/javascript" src="../bower_components/jquery/dist/jquery.js"></script>
+        <script type="text/javascript" src="/js/logbookapp.js"></script>
+        <link rel="stylesheet" type="text/css" href="/views/logbook.css">
+
+    </head>
+    <body ng-controller="LogbookController as logbook">
+    <h1>Logbook</h1>
+
+    <button ng-click="logbook.addFlight()">Add a Flight</button>
+    <button ng-click="hideDate()">hide</button>
+    <div>
+        <table id="logtable">
+            <tbody>
+        <tr><th>&nbsp</th><th>Date</th><th>make/<br/>model</th><th>Ident.</th><th>From</th><th>To</th>
+                <th>Single Engine</th><th>Multi-Engine</th><th>Ground Trainer</th><th>Dual Received</th>
+                <th>Pilot in Command</th><th>Day</th><th>Night</th><th>Cross Country</th><th>Acutal Instrument</th>
+                <th>Simulated Instrument</th><th>Instrument Approaches</th><th>Day Landings</th><th>Night Landings</th>
+                <th>Total Duration</th>
+                <th style=" width: 500px !important;">Description</th>
+            </tr>
+            <tr class="ss"  ng-repeat="flight in loggedFlight">
+                <td>  <a href="#" class="button"  ng-click="storeFlight(flight._id)">storeFlight {{flightcounter}}</a><button ng-click='updateFlight(flight._id)' id="{{flight._id}}">update</button><button ng-click='deleteFlight(flight._id)'>delete</button></td>
+                <td><input class="spreadsheet" type="text" ng-model ='flight.date'}}/></td>
+                <td><input class="spreadsheet" type="text" ng-model ='flight.make'}}/>
+                <input class="spreadsheet" type="text" ng-model ='flight.model'}}/></td>
+              <td><input class="spreadsheet" type="text" ng-model ='flight.TaiNumber'/></td>
+                <td><input class="spreadsheet" type="text" ng-model ='flight.Origin'/></td>
+                <td><input class="spreadsheet" type="text" ng-model ='flight.Destination'/></td>
+                <td><input class="spreadsheet" type="text" ng-model ='flight.SingleEngine'/></td>
+                <td><input class="spreadsheet" type="text" ng-model ='flight.MultiEngine'/></td>
+                <td><input class="spreadsheet" type="text" ng-model ='flight.GroundTrainer'/></td>
+                <td><input class="spreadsheet" type="text" ng-model ='flight.DualReceived'/></td>
+                <td><input class="spreadsheet" type="text" ng-model ='flight.PilotInCommand'/></td>
+                <td><input class="spreadsheet" type="text" ng-model ='flight.Day'/></td>
+                <td><input class="spreadsheet" type="text" ng-model ='flight.Night'/></td>
+                <td><input class="spreadsheet" type="text" ng-model ='flight.CrossCountry'/></td>
+                <td><input class="spreadsheet" type="text" ng-model ='flight.ActualInstrument'/></td>
+                <td><input class="spreadsheet" type="text" ng-model ='flight.SimulatedInstrument'/></td>
+                <td><input class="spreadsheet" type="text" ng-model ='flight.NumberOfInstrumentApproaches'/></td>
+                <td><input class="spreadsheet" type="text" ng-model ='flight.NumberOfDayLandings'/></td>
+                <td><input class="spreadsheet" type="text" ng-model ='flight.NumberOfNightLandings'/></td>
+                <td><input class="spreadsheet" type="text" ng-model ='flight.TotalDurationOfFlight'/></td>
+                <td><textarea rows="2" ng-model="flight.description" ></textarea></td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <a href="#" class="button" ng-click="addFlight()">Add Flight {{flightcounter}}</a>
+
+
+    <div>
+        <table>
+            <tr><th>Date</th><th>make/model</th><th>Identification</th><th>From</th><th>To</th>
+                <th>Single Engine</th><th>Multi-Engine</th><th>Ground Trainer</th><th>Dual Received</th>
+                <th>Pilot in Command</th><th>Day</th><th>Night</th><th>Cross Country</th><th>Acutal Instrument</th>
+                <th>Simulated Instrument</th><th>Instrument Approaches</th><th>Day Landings</th><th>Night Landings</th>
+                <th>Total Duration</th>
+                <th style=" width: 500px !important;">Description</th>
+            </tr>
+            <tr ng-repeat="flight in loggedFlight">
+                <td>{{flight.date}}</td><td>{{flight.make}}/{{flight.model}}</td>
+                <td>{{flight.TailNumber}}</td><td>{{flight.start}}</td><td>{{flight.destination}}</td>
+                <td>{{flight.SingleEngine}}</td><td>{{flight.MultiEngine}}</td><td>{{flight.GroundTrainer}}</td>
+                <td>{{flight.DualReceived}}</td><td>{{flight.PilotInCommand}}</td><td>{{flight.Day}}</td>
+                <td>{{flight.Night}}</td><td>{{flight.CrossCountry}}</td><td>{{flight.ActualInstrument}}</td>
+                <td>{{flight.SimulatedInstrument}}</td><td>{{flight.NumberOfInstrumentApproaches}}</td>
+                <td>{{flight.NumberOfDayLandings}}</td><td>{{flight.NumberOfNightLandings}}</td>
+                <td>{{flight.TotalDurationOfFlight}}</td>
+                <td style="width:5em; font-size:10px" ng-model="flight.description" >{{flight.description}}</td>
+            </tr>
+        </table>
+
+    </div>
+
+
+    </body>
+    </html>
+
+  <!--  <div>
+        <div>
+            entry1:<input type="text" id="entry1" name="entry1" value="initial"/>
+        </div>
+        <input type="button" id="getdata" value="get data from iris"/>
+    </div>
+    <div>
+        <div>
+            entry2:<span style="width:500px; height:500px">
+                    <input type="textarea" rows="100" id="entry2" name="entry2" value="initial mongo"/>
+        </span>
+        </div>
+        <input type="button" id="getmongodata" value="get data from mongo"/>
+    </div>
+
+    <div class="container" id="pile">
+        <table id="logpage">
+
+        </table>
+
+    </div>
+    <script type="text/javascript" src="../js/logbook.js">
+
+    </script>
+</html5> -->
