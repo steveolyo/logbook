@@ -14,6 +14,7 @@
         $scope.flightcounter;
         $scope.loggedFlight;
         $scope.newFlight;
+        $scope.flightId;
         $http.get('/logbookdata')
             .success(function(data,status,headers,config){
                $scope.loggedFlight = data;
@@ -29,42 +30,82 @@
             document.getElementById("logtable").classList.toggle("hide2")
         }
 
+        $scope.createEmptyFlight = function(){
+            var newFlight =     {
 
+                date:'',
+                make:'',
+                model:'',
+                TailNumber:'',
+                Origin:'',
+                Destination:'',
+                OtherAirports:[],
+                SingleEngine:0,
+                MultiEngine:0,
+                GroundTrainer:0,
+                DualReceived:0,
+                PilotInCommand:0,
+                Day:0,
+                Night:0,
+                CrossCountry:0,
+                ActualInstrument:0,
+                SimulatedInstrument:0,
+                NumberOfInstrumentApproaches:0,
+                NumberOfDayLandings:0,
+                NumberOfNightLandings:0,
+                TotalDurationOfFlight:0,
+                description:''}
+            return newFlight;
+        }
 
         $scope.addFlight = function(){
 
+            var blankFlight = $scope.createEmptyFlight();
 
-            $scope.newFlight =     {
 
-                    date:'',
-                    make:'',
-                    model:'',
-                    TailNumber:'',
-                    Origin:'',
-                    Destination:'',
-                    OtherAirports:[],
-                    SingleEngine:0,
-                    MultiEngine:0,
-                    GroundTrainer:0,
-                    DualReceived:0,
-                    PilotInCommand:0,
-                    Day:0,
-                    Night:0,
-                    CrossCountry:0,
-                    ActualInstrument:0,
-                    SimulatedInstrument:0,
-                    NumberOfInstrumentApproaches:0,
-                    NumberOfDayLandings:0,
-                    NumberOfNightLandings:0,
-                    TotalDurationOfFlight:0,
-                    description:''}
-
-            $scope.loggedFlight.push($scope.newFlight);
+            $scope.loggedFlight.push(blankFlight);
             $scope.flightcounter++;
 
             //save the flight
 
 
+
+        }
+        $scope.editField=function(id){
+            //alert(id);
+            $scope.flightId = id;
+        }
+        $scope.showEdit=function(id){
+            if(id == $scope.flightId){
+                return true;
+            }
+            return false;
+        }
+        $scope.duplicateOriginal=function(original){
+            var blankFlight = $scope.createEmptyFlight();
+                blankFlight.date=original.date;
+                blankFlight.make=original.make;
+                blankFlight.model=original.model;
+                blankFlight.TailNumber=original.TailNumber;
+                blankFlight.Origin=original.Origin;
+                blankFlight.Destination=original.Destination;
+                blankFlight.OtherAirports=original.OtherAirports;
+                blankFlight.SingleEngine=original.SingleEngine;
+                blankFlight.MultiEngine=original.MultiEngine;
+                blankFlight.GroundTrainer=original.GroundTrainer;
+                blankFlight.DualReceived=original.DualReceived;
+                blankFlight.PilotInCommand=original.PilotInCommand;
+                blankFlight.Day=original.Day;
+                blankFlight.Night=original.Night;
+                blankFlight.CrossCountry=original.CrossCountry;
+                blankFlight.ActualInstrument=original.ActualInstrument;
+                blankFlight.SimulatedInstrument=original.SimulatedInstrument;
+                blankFlight.NumberOfInstrumentApproaches=original.NumberOfInstrumentApproaches;
+                blankFlight.NumberOfDayLandings=original.NumberOfDayLandings;
+                blankFlight.NumberOfNightLandings=original.NumberOfNightLandings;
+                blankFlight.TotalDurationOfFlight=original.TotalDurationOfFlight;
+                blankFlight.description=original.description;
+            return blankFlight;
 
         }
         $scope.getObjectByID = function(objid,dataArray){
@@ -82,6 +123,32 @@
             return returnObject;
         }
 
+        getFlightById = function(flightNumber){
+            var len = $scope.loggedFlight.length;
+            for(i = 0; i<len;i++){
+                if($scope.loggedFlight[i]._id === flightNumber){
+                    return $scope.loggedFlight[i];
+                }
+            }
+
+        }
+        $scope.duplicateFlight = function(flightNumber){
+
+            var original = getFlightById(flightNumber);
+
+            $scope.newFlight = $scope.duplicateOriginal(original);
+            $scope.loggedFlight.push($scope.newFlight);
+            $http.post('/updateflight',{"flightData":$scope.newFlight})
+                .success(function(data,status,headers,config){
+                    $scope.loggedFlight = data;
+                    $scope.flightcounter = data.length+1;
+                })
+                .error(function(data,status,headers,config){
+
+                })
+
+            $scope.flightcounter++;
+        }
         $scope.deleteFlight = function(flightNumber){
             console.log("delete "+flightNumber);
             $http.post('/deleteflight',{flightNumber:flightNumber})
