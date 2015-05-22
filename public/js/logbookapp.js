@@ -8,7 +8,6 @@
 
 
     app.controller('LogbookController', function($scope,$http){
-        this.flights = book;
 
 
         $scope.flightcounter;
