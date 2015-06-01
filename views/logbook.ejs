@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html ng-app="logbookapp">
+<head>
+    <title>Logbook</title>
+    <script src="../bower_components/angular/angular.js"></script>
+    <script type="text/javascript" src="../bower_components/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="/js/logbookapp.js"></script>
+    <link rel="stylesheet" type="text/css" href="/views/logbook.css">
+
+</head>
+<body ng-controller="LogbookController as logbook">
+<h1>Logbook</h1>
+<!--http://www.dummies.com/how-to/content/using-the-div-tag-to-create-tables.html-->
+<div class="table">
+
+    <div class="heading">
+        <div class="cell"><p>control</p></div>
+        <div class="cell"><p>date</p></div>
+        <div class="cell"><p>make</p></div>
+        <div class="cell"><p>model</p></div>
+        <div class="cell"><p>Ident.</p></div>
+        <div class="cell"><p>Origin</p></div>
+        <div class="cell"><p>Destination</p></div>
+        <div class="cell"><p>Single Engine</p></div>
+        <div class="cell"><p>Multi Engine</p></div>
+        <div class="cell"><p>Ground Trainer</p></div>
+        <div class="cell"><p>Dual Received</p></div>
+        <div class="cell"><p>Pilot In Command</p></div>
+        <div class="cell"><p>Day</p></div>
+        <div class="cell"><p>Night</p></div>
+        <div class="cell"><p>Cross Country</p></div>
+        <div class="cell"><p>Actual Instrument</p></div>
+        <div class="cell"><p>Simulated Instrument</p></div>
+        <div class="cell"><p>Number Of Instrument Approaches</p></div>
+        <div class="cell"><p>Number Of Day Landings</p></div>
+        <div class="cell"><p>Number Of Night Landings</p></div>
+        <div class="cell"><p>Total Duration of Flight</p></div>
+        <div class="cell"><p>Description</p></div>
+    </div>
+    <div ng-repeat="flight in loggedFlight" class="row",>
+        <div class="cell">
+            <button ng-show="!showEdit(flight._id)" ng-click="editField(flight._id)" >edit</button>
+            <button ng-show="showEdit(flight._id)" ng-click='updateFlight(flight._id)' >update</button>
+            <button ng-show="!showEdit(flight._id)" ng-click='deleteFlight(flight._id)'>delete</button>
+            <button ng-show="!showEdit(flight._id)" ng-click='duplicateFlight(flight._id)'>duplicateFlight</button>
+        </div>
+        <div ng-show="!showEdit(flight._id)" class="cell"><p>{{flight.date}}</p></div>
+        <div ng-show="showEdit(flight._id)" class="celledit"><input type="text" ng-model="flight.date"/></div>
+
+        <div ng-show="!showEdit(flight._id)" class="cell"><p>{{flight.make}}</p></div>
+        <div ng-show="showEdit(flight._id)" class="celledit" ><input type="text" ng-model="flight.make"/></div>
+
+        <div ng-show="!showEdit(flight._id)" class="cell"><p>{{flight.model}}</p></div>
+        <div ng-show="showEdit(flight._id)" class="celledit"><input type="text" ng-model="flight.model"/></div>
+
+        <div ng-show="!showEdit(flight._id)" class="cell"><p>{{flight.TaiNumber}}</p></div>
+        <div ng-show="showEdit(flight._id)" class="celledit"><input type="text" ng-model="flight.TaiNumber"/></div>
+
+        <div ng-show="!showEdit(flight._id)" class="cell"><p>{{flight.Origin}}</p></div>
+        <div ng-show="showEdit(flight._id)" class="celledit"><input type="text" ng-model="flight.Origin"/></div>
+
+        <div ng-show="!showEdit(flight._id)" class="cell"><p>{{flight.Destination}}</p></div>
+        <div ng-show="showEdit(flight._id)" class="celledit"><input type="text" ng-model="flight.Destination"/></div>
+
+        <div ng-show="!showEdit(flight._id)" class="cell"><p>{{flight.SingleEngine}}</p></div>
+        <div ng-show="showEdit(flight._id)" class="celledit"><input type="text" ng-model="flight.SingleEngine"/></div>
+
+        <div ng-show="!showEdit(flight._id)" class="cell"><p>{{flight.MultiEngine}}</p></div>
+        <div ng-show="showEdit(flight._id)" class="celledit"><input type="text" ng-model="flight.MultiEngine"/></div>
+        <div ng-show="!showEdit(flight._id)" class="cell"><p>{{flight.GroundTrainer}}</p></div>
+        <div ng-show="showEdit(flight._id)" class="celledit"><input type="text" ng-model="flight.GroundTrainer"/></div>
+        <div ng-show="!showEdit(flight._id)" class="cell"><p>{{flight.DualReceived}}</p></div>
+        <div ng-show="showEdit(flight._id)" class="celledit"><input type="text" ng-model="flight.DualReceived"/></div>
+        <div ng-show="!showEdit(flight._id)" class="cell"><p>{{flight.PilotInCommand}}</p></div>
+        <div ng-show="showEdit(flight._id)" class="celledit"><input type="text" ng-model="flight.PilotInCommand"/></div>
+        <div ng-show="!showEdit(flight._id)" class="cell"><p>{{flight.Day}}</p></div>
+        <div ng-show="showEdit(flight._id)" class="celledit"><input type="text" ng-model="flight.Day"/></div>
+        <div ng-show="!showEdit(flight._id)" class="cell"><p>{{flight.Night}}</p></div>
+        <div ng-show="showEdit(flight._id)" class="celledit"><input type="text" ng-model="flight.Night"/></div>
+        <div ng-show="!showEdit(flight._id)" class="cell"><p>{{flight.CrossCountry}}</p></div>
+        <div ng-show="showEdit(flight._id)" class="celledit"><input type="text" ng-model="flight.CrossCountry"/></div>
+        <div ng-show="!showEdit(flight._id)" class="cell"><p>{{flight.ActualInstrument}}</p></div>
+        <div ng-show="showEdit(flight._id)" class="celledit"><input type="text" ng-model="flight.ActualInstrument"/></div>
+        <div ng-show="!showEdit(flight._id)" class="cell"><p>{{flight.SimulatedInstrument}}</p></div>
+        <div ng-show="showEdit(flight._id)" class="celledit"><input type="text" ng-model="flight.SimulatedInstrument"/></div>
+        <div ng-show="!showEdit(flight._id)" class="cell"><p>{{flight.NumberOfInstrumentApproaches}}</p></div>
+        <div ng-show="showEdit(flight._id)" class="celledit"><input type="text" ng-model="flight.NumberOfInstrumentApproaches"/></div>
+        <div ng-show="!showEdit(flight._id)" class="cell"><p>{{flight.NumberOfDayLandings}}</p></div>
+        <div ng-show="showEdit(flight._id)" class="celledit"><input type="text" ng-model="flight.NumberOfDayLandings"/></div>
+        <div ng-show="!showEdit(flight._id)" class="cell"><p>{{flight.NumberOfNightLandings}}</p></div>
+        <div ng-show="showEdit(flight._id)" class="celledit"><input type="text" ng-model="flight.NumberOfNightLandings"/></div>
+        <div ng-show="!showEdit(flight._id)" class="cell"><p>{{flight.TotalDurationOfFlight}}</p></div>
+        <div ng-show="showEdit(flight._id)" class="celledit"><input type="text" ng-model="flight.TotalDurationOfFlight"/></div>
+        <div ng-show="!showEdit(flight._id)" class="cell"><p>{{flight.description}}</p></div>
+        <div ng-show="showEdit(flight._id)" class="celledit"><input type="text" ng-model="flight.description"/></div>
+    </div>
+</div>
+
+<button ng-click="logbook.addFlight()">Add a Flight</button>
+<button ng-click="hideDate()">hide</button>
+<div>
+    <table id="logtable">
+        <tbody>
+        <tr><th>&nbsp</th><th>Date</th><th>make/<br/>model</th><th>Ident.</th><th>From</th><th>To</th>
+            <th>Single Engine</th><th>Multi-Engine</th><th>Ground Trainer</th><th>Dual Received</th>
+            <th>Pilot in Command</th><th>Day</th><th>Night</th><th>Cross Country</th><th>Acutal Instrument</th>
+            <th>Simulated Instrument</th><th>Instrument Approaches</th><th>Day Landings</th><th>Night Landings</th>
+            <th>Total Duration</th>
+            <th style=" width: 500px !important;">Description</th>
+        </tr>
+        <tr class="ss"  ng-repeat="flight in loggedFlight">
+            <td>  <a href="#" class="button"  ng-click="storeFlight(flight._id)">storeFlight {{flightcounter}}</a><button ng-click='updateFlight(flight._id)' id="{{flight._id}}">update</button><button ng-click='deleteFlight(flight._id)'>delete</button></td>
+            <td><input class="spreadsheet" type="text" ng-model ='flight.date'/></td>
+            <td><input class="spreadsheet" type="text" ng-model ='flight.make'/>
+                <input class="spreadsheet" type="text" ng-model ='flight.model'/></td>
+            <td><input class="spreadsheet" type="text" ng-model ='flight.TailNumber'/></td>
+            <td><input class="spreadsheet" type="text" ng-model ='flight.Origin'/></td>
+            <td><input class="spreadsheet" type="text" ng-model ='flight.Destination'/></td>
+            <td><input class="spreadsheet" type="text" ng-model ='flight.SingleEngine'/></td>
+            <td><input class="spreadsheet" type="text" ng-model ='flight.MultiEngine'/></td>
+            <td><input class="spreadsheet" type="text" ng-model ='flight.GroundTrainer'/></td>
+            <td><input class="spreadsheet" type="text" ng-model ='flight.DualReceived'/></td>
+            <td><input class="spreadsheet" type="text" ng-model ='flight.PilotInCommand'/></td>
+            <td><input class="spreadsheet" type="text" ng-model ='flight.Day'/></td>
+            <td><input class="spreadsheet" type="text" ng-model ='flight.Night'/></td>
+            <td><input class="spreadsheet" type="text" ng-model ='flight.CrossCountry'/></td>
+            <td><input class="spreadsheet" type="text" ng-model ='flight.ActualInstrument'/></td>
+            <td><input class="spreadsheet" type="text" ng-model ='flight.SimulatedInstrument'/></td>
+            <td><input class="spreadsheet" type="text" ng-model ='flight.NumberOfInstrumentApproaches'/></td>
+            <td><input class="spreadsheet" type="text" ng-model ='flight.NumberOfDayLandings'/></td>
+            <td><input class="spreadsheet" type="text" ng-model ='flight.NumberOfNightLandings'/></td>
+            <td><input class="spreadsheet" type="text" ng-model ='flight.TotalDurationOfFlight'/></td>
+            <td><textarea rows="2" ng-model="flight.description" ></textarea></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+<a href="#" class="button" ng-click="addFlight()">Add Flight {{flightcounter}}</a>
+
+
+<div>
+    <table>
+        <tr><th>Date</th><th>make/model</th><th>Identification</th><th>From</th><th>To</th>
+            <th>Single Engine</th><th>Multi-Engine</th><th>Ground Trainer</th><th>Dual Received</th>
+            <th>Pilot in Command</th><th>Day</th><th>Night</th><th>Cross Country</th><th>Acutal Instrument</th>
+            <th>Simulated Instrument</th><th>Instrument Approaches</th><th>Day Landings</th><th>Night Landings</th>
+            <th>Total Duration</th>
+            <th style=" width: 500px !important;">Description</th>
+        </tr>
+        <tr ng-repeat="flight in loggedFlight">
+            <td>{{flight.date}}</td><td>{{flight.make}}/{{flight.model}}</td>
+            <td>{{flight.TailNumber}}</td><td>{{flight.start}}</td><td>{{flight.destination}}</td>
+            <td>{{flight.SingleEngine}}</td><td>{{flight.MultiEngine}}</td><td>{{flight.GroundTrainer}}</td>
+            <td>{{flight.DualReceived}}</td><td>{{flight.PilotInCommand}}</td><td>{{flight.Day}}</td>
+            <td>{{flight.Night}}</td><td>{{flight.CrossCountry}}</td><td>{{flight.ActualInstrument}}</td>
+            <td>{{flight.SimulatedInstrument}}</td><td>{{flight.NumberOfInstrumentApproaches}}</td>
+            <td>{{flight.NumberOfDayLandings}}</td><td>{{flight.NumberOfNightLandings}}</td>
+            <td>{{flight.TotalDurationOfFlight}}</td>
+            <td style="width:5em; font-size:10px" ng-model="flight.description" >{{flight.description}}</td>
+        </tr>
+    </table>
+
+</div>
+
+
+</body>
+</html>
+
+<!--  <div>
+      <div>
+          entry1:<input type="text" id="entry1" name="entry1" value="initial"/>
+      </div>
+      <input type="button" id="getdata" value="get data from iris"/>
+  </div>
+  <div>
+      <div>
+          entry2:<span style="width:500px; height:500px">
+                  <input type="textarea" rows="100" id="entry2" name="entry2" value="initial mongo"/>
+      </span>
+      </div>
+      <input type="button" id="getmongodata" value="get data from mongo"/>
+  </div>
+
+  <div class="container" id="pile">
+      <table id="logpage">
+
+      </table>
+
+  </div>
+  <script type="text/javascript" src="../js/logbook.js">
+
+  </script>
+</html5> -->

@@ -3,6 +3,79 @@ var app = express();
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 var jsonParser = bodyParser.json();
+var passport = require('passport'),
+    LocalStrategy = require('passport-local').Strategy;
+
+var users = [
+    { id: 1, username: 'bob', password: 'secret', email: 'bob@example.com' }
+    , { id: 2, username: 'joe', password: 'birthday', email: 'joe@example.com' }
+];
+
+passport.use(new LocalStrategy(
+    function(username,password, done){
+
+console.log('local strategy');
+/*
+        User.findOne({username:username},function(err,user){
+            if(err){return done(err);}
+            if(!user){
+                return done(null, false,{message:'bad username.'});
+            }
+            if(!user.validPassword(password)){
+                return done(null, false,{message:'bad password'});
+            }
+            return done(null, user);
+        });
+
+*/
+
+    process.nextTick(function(){    MongoClient.connect("mongodb://aero2:topteam@ds041871.mongolab.com:41871/logbook",function(err,db){
+                try {
+                    if (err) {
+                        console.log("dang, error in authentication");
+                    }
+                    else {
+                        console.log("we are connected for login");
+                        var collection = db.collection('users');
+                        var userObj = collection.findOne({username:username}).toArray(function(err,user){
+                            console.log("user:")
+                            console.log(user);
+                            if(err){
+                                return done(err);
+                            }
+                            if(!user){
+                                return done(null,false);
+                            }
+                            if(user.password != password){
+                                return done(null, false,{message:'invalid password'});
+                            }
+                            db.close();
+                            return done(null, user);
+
+                        })
+
+                    }
+                }
+                catch(error){
+                    console.log("closing the db connection");
+                    db.close();
+                }finally {
+                    console.log("finally closing the db")
+                     db.close();
+                }
+            }
+        )
+
+
+
+
+
+
+
+
+         }
+    )}
+));
 
 
 var http = require('http');
@@ -10,6 +83,9 @@ var requestCount = 0;
 
 var MongoClient = require('mongodb').MongoClient;
 var ObjectID = require('mongodb').ObjectID;
+
+
+
 var allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', 'example.com');
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
@@ -29,9 +105,31 @@ var cors = require('cors')
 app.use(cors())
 app.use(express.static(__dirname + '/public'));
 app.get('/', function(req, res) {
-    console.log("Here");
+    res.sendfile('./public/views/login.html');
+});
+app.get('/test',function(req,res){
     res.sendfile('./public/views/index.html');
 });
+
+app.post('/login',function(req,res,next){
+    passport.authenticate('local',function(err,user,info) {
+        if (err) {
+            return next(err);
+        }
+        if (!user) {
+          //  req.session.messages = 'no such user';
+            return res.redirect('/login');
+        }
+        req.logIn(user, function (err) {
+            if (err) {
+                return next(err);
+            }
+            return res.redirect('/logbook');
+        })
+    })(req,res,next);
+
+});
+
 app.get('/about', function(req, res) {
     res.sendfile('./public/views/about.html');
 });

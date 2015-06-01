@@ -1,17 +1,30 @@
 {
-  "name": "node-js-getting-started",
+  "name": "logbook",
   "version": "0.1.2",
-  "description": "A sample Node.js app using Express 4",
-  "main": "index.js",
+  "description": "Pilot Electronic LogBook",
+  "main": "server.js",
   "scripts": {
     "start": "node logbooknode.js"
   },
   "dependencies": {
     "body-parser": "^1.12.4",
-    "cool-ascii-faces": "~1.3.x",
-    "cradle": "~0.6.9",
     "express": "~4.9.x",
-    "nano": "~6.0.x"
+    "express-session": "~1.0.0",
+    "nano": "~6.0.x",
+    "ejs" : "~0.8.5",
+    "mongoose" : "~3.8.1",
+    "passport" : "~0.1.17",
+    "passport-local" : "~0.1.6",
+    "passport-facebook" : "~1.0.2",
+    "passport-twitter" : "~1.0.2",
+    "passport-google-oauth" : "~0.1.5",
+    "connect-flash" : "~0.1.1",
+    "bcrypt-nodejs" : "latest",
+
+    "morgan": "~1.0.0",
+    "cookie-parser": "~1.0.0",
+    "method-override": "~1.0.0"
+
   },
   "engines": {
     "node": "0.10.x"
