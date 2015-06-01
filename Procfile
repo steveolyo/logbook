@@ -1,2 +1,2 @@
-#web: node iriscouch.js
-web: node logbooknode.js --debug
+#web: node iriscouch.js --debug
+web: node server.js
