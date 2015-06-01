@@ -82,6 +82,99 @@ module.exports = function(app, passport) {
             }
         )
     })
+    app.post('/deleteflight',function(req,res){
+        var flightNumber = req.body.flightNumber;
+
+        console.log('delete flight '+flightNumber);
+
+        MongoClient.connect("mongodb://aero2:topteam@ds041871.mongolab.com:41871/logbook",function(err,db){
+            try {
+                if (err) {
+                    console.log("dang, error");
+                }
+                else {
+                    console.log("we are deleting");
+                    var collection = db.collection('logData');
+                    var objectId = ObjectID(flightNumber);
+
+                    collection.removeOne({"_id":ObjectID(flightNumber)},function(){
+                    });
+
+                    collection.find().sort({date:1}).toArray(function(err,docs){
+                        console.log("records:")
+                        console.log(docs);
+
+
+                        res.writeHead(200, { 'Content-Type': 'application/json', "Access-Control-Allow-Origin":"*" });
+                        res.write(JSON.stringify(docs));
+                        res.end();
+                        console.log('finit')
+                    })
+                    console.log('finit deleting')
+
+                }
+            }
+            catch(error){
+                console.log("error: closing the db connection");
+                db.close();
+            }finally {
+                console.log("finally closing the db")
+                // db.close();
+            }
+        })
+    });
+    app.post('/updateflight',function(req,res){
+        var flightData = req.body.flightData;
+        var flightNumber = flightData._id;
+
+        console.log('update flight '+flightNumber);
+
+        MongoClient.connect("mongodb://aero2:topteam@ds041871.mongolab.com:41871/logbook",function(err,db){
+            try {
+                if (err) {
+                    console.log("update, error");
+                }
+                else {
+                    console.log("we are update");
+                    var collection = db.collection('logData');;
+                    var objectId = ObjectID(flightNumber);
+
+                    var fd = JSON.stringify(flightData);
+                    flightDta = '{"date":"2-77","make":"moon"}';
+                    delete flightData._id;
+
+
+                    //collection.updateOne({"_id":ObjectID(flightNumber)},flightData,
+                    collection.updateOne({"_id":ObjectID(flightNumber)},flightData,
+                        {upsert:true, w: 1}, function(err, result)
+                        {
+                            console.log("updated")
+                        });
+
+
+                    //  collection.removeOne({"_id":ObjectID(flightNumber)},function(){
+                    //  });
+
+                    collection.find().sort({date:1}).toArray(function(err,docs){
+
+                        res.writeHead(200, { 'Content-Type': 'application/json', "Access-Control-Allow-Origin":"*" });
+                        res.write(JSON.stringify(docs));
+                        res.end();
+                        console.log('finit')
+                    })
+                    console.log('finit updating')
+
+                }
+            }
+            catch(error){
+                console.log("error: closing the db connection");
+                db.close();
+            }finally {
+                console.log("finally closing the db")
+                // db.close();
+            }
+        })
+    });
     // =====================================
     // PROFILE SECTION =====================
     // =====================================
