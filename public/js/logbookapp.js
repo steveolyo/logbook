@@ -9,11 +9,13 @@
 
     app.controller('LogbookController', function($scope,$http){
 
-
+        $scope.showModel=true;
+        $scope.showMake=true;
         $scope.flightcounter;
         $scope.loggedFlight;
         $scope.newFlight;
         $scope.flightId;
+        $scope.user;
         $http.get('/logbookdata')
             .success(function(data,status,headers,config){
                $scope.loggedFlight = data;
@@ -82,6 +84,7 @@
         }
         $scope.duplicateOriginal=function(original){
             var blankFlight = $scope.createEmptyFlight();
+
                 blankFlight.date=original.date;
                 blankFlight.make=original.make;
                 blankFlight.model=original.model;
