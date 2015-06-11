@@ -1,4 +1,5 @@
 // server.js
+// https://scotch.io/tutorials/easy-node-authentication-setup-and-local
 
 // set up ======================================================================
 // get all the tools we need

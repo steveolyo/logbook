@@ -20,7 +20,7 @@ module.exports = function(app, passport) {
     });
     // process the login form
     app.post('/login', passport.authenticate('local-login', {
-        successRedirect : '/profile', // redirect to the secure profile section
+        successRedirect : '/logbook', // redirect to the secure profile section
         failureRedirect : '/login', // redirect back to the signup page if there is an error
         failureFlash : true // allow flash messages
     }));
@@ -49,16 +49,16 @@ module.exports = function(app, passport) {
     // app.post('/signup', do all our passport stuff here);
     app.get('/logbookdata',function(request,response){
         var par = request.params
-
+        var userId = request.session.passport.user;
         MongoClient.connect("mongodb://aero2:topteam@ds041871.mongolab.com:41871/logbook",function(err,db){
                 try {
                     if (err) {
                         console.log("dang, error");
                     }
                     else {
-                        console.log("we are connected");
+                        console.log("data for the userID:"+userId);
                         var collection = db.collection('logData');
-                        collection.find().sort({date:1}).toArray(function(err,docs){
+                        collection.find({"userID":userId}).sort({date:1}).toArray(function(err,docs){
                             console.log("records:")
                             console.log(docs);
 
@@ -125,6 +125,8 @@ module.exports = function(app, passport) {
     });
     app.post('/updateflight',function(req,res){
         var flightData = req.body.flightData;
+        var userId = req.session.passport.user;
+
         var flightNumber = flightData._id;
 
         console.log('update flight '+flightNumber);
@@ -142,6 +144,8 @@ module.exports = function(app, passport) {
                     var fd = JSON.stringify(flightData);
                     flightDta = '{"date":"2-77","make":"moon"}';
                     delete flightData._id;
+
+                    flightData.userID = userId;
 
 
                     //collection.updateOne({"_id":ObjectID(flightNumber)},flightData,
