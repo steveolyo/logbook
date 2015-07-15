@@ -6,10 +6,29 @@
     <script type="text/javascript" src="../bower_components/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="/js/logbookapp.js"></script>
     <link rel="stylesheet" type="text/css" href="/views/logbook.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.8.3/angular-material.min.css">
+
 
 </head>
 <body ng-controller="LogbookController as logbook">
+<!-- Angular Material Dependencies -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.min.js"></script>
+
+
+<!-- Angular Material Javascript now available via Google CDN; version 0.8 used here -->
+<script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.8.3/angular-material.min.js"></script>
+
 <h1>Logbook</h1>
+<md-icon md-font-icon="fa-magic" class="fa" alt="magic wand"></md-icon>
+<md-icon md-font-icon="android" alt="android"></md-icon>
+<md-button md-no-ink="" class="md-primary">Primary (md-noink)</md-button>
+<i class="material-icons">delete</i>
+<i class="material-icons">add</i>
+<i class="material-icons">edit</i>
+<i class="material-icons">duplicate</i>
 <!--http://www.dummies.com/how-to/content/using-the-div-tag-to-create-tables.html-->
 <strong>id</strong>: <%= user._id %><br>
 <div class="table">
@@ -38,12 +57,16 @@
         <div class="headcell"><p>Total Duration of Flight</p></div>
         <div class="headcell"><p>Description</p></div>
     </div>
+
+
+
+
     <div ng-repeat="flight in loggedFlight" class="row",>
         <div class="cell">
-            <button ng-show="!showEdit(flight._id)" ng-click="editField(flight._id)" >edit</button>
-            <button ng-show="showEdit(flight._id)" ng-click='updateFlight(flight._id)' >update</button>
-            <button ng-show="!showEdit(flight._id)" ng-click='deleteFlight(flight._id)'>delete</button>
-            <button ng-show="!showEdit(flight._id)" ng-click='duplicateFlight(flight._id)'>duplicateFlight</button>
+            <button ng-show="!showEdit(flight._id)" ng-click="editField(flight._id)"  >    <i class="material-icons">edit</i></button>
+            <button ng-show="showEdit(flight._id)" ng-click='updateFlight(flight._id)' ><i class="material-icons">archive</i></button>
+            <button ng-show="!showEdit(flight._id)" ng-click='deleteFlight(flight._id)'><i class="material-icons">delete</i></button>
+            <button ng-show="!showEdit(flight._id)" ng-click='duplicateFlight(flight._id)'><i class="material-icons">delete</i></button>
         </div>
         <div ng-show="!showEdit(flight._id)" class="cell"><p>{{flight.date}}</p></div>
         <div ng-show="showEdit(flight._id)" class="celledit"><input type="text" ng-model="flight.date"/></div>
@@ -97,10 +120,10 @@
     </div>
 </div>
 
-<button ng-click="logbook.addFlight()">Add a Flight</button>
+<button ng-click="addFlight()"><i class="material-icons">add</i></button>
 
 <a href="#" class="button" ng-click="addFlight()">Add Flight {{flightcounter}}</a>
-
+<i class="material-icons">face</i>
 
 <div>
     <table>
