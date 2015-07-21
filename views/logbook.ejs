@@ -31,6 +31,7 @@
 <i class="material-icons">duplicate</i>
 <!--http://www.dummies.com/how-to/content/using-the-div-tag-to-create-tables.html-->
 <strong>id</strong>: <%= user._id %><br>
+<strong>Total Hours</strong>: <%= totalHours %><br>
 <div class="table">
 
     <div class="heading">
@@ -66,7 +67,7 @@
             <button ng-show="!showEdit(flight._id)" ng-click="editField(flight._id)"  >    <i class="material-icons">edit</i></button>
             <button ng-show="showEdit(flight._id)" ng-click='updateFlight(flight._id)' ><i class="material-icons">archive</i></button>
             <button ng-show="!showEdit(flight._id)" ng-click='deleteFlight(flight._id)'><i class="material-icons">delete</i></button>
-            <button ng-show="!showEdit(flight._id)" ng-click='duplicateFlight(flight._id)'><i class="material-icons">delete</i></button>
+            <button ng-show="!showEdit(flight._id)" ng-click='duplicateFlight(flight._id)'><i class="material-icons">content_copy</i></button>
         </div>
         <div ng-show="!showEdit(flight._id)" class="cell"><p>{{flight.date}}</p></div>
         <div ng-show="showEdit(flight._id)" class="celledit"><input type="text" ng-model="flight.date"/></div>
