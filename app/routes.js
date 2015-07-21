@@ -196,7 +196,8 @@ module.exports = function(app, passport) {
     // we will use route middleware to verify this (the isLoggedIn function)
     app.get('/logbook', isLoggedIn, function(req, res) {
         res.render('logbook.ejs', {
-            user : req.user // get the user out of session and pass to template
+            user : req.user, // get the user out of session and pass to template
+            totalHours : 10
         });
     });
     // =====================================
