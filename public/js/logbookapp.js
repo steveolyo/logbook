@@ -16,10 +16,25 @@
         $scope.newFlight;
         $scope.flightId;
         $scope.user;
+        $scope.totalHours=0;
         $http.get('/logbookdata')
             .success(function(data,status,headers,config){
                $scope.loggedFlight = data;
                $scope.flightcounter = data.length+1;
+
+                for(i=0;i<$scope.flightcounter;i++) {
+                    if ($scope.loggedFlight[i]) {
+                        hour = $scope.loggedFlight[i].TotalDurationOfFlight;
+                        flightDate = new Date($scope.loggedFlight[i].date);
+                        $scope.loggedFlight[i].date = flightDate;
+
+
+                        $scope.totalHours += Number(hour);
+                    }
+                }
+
+
+
 
             })
             .error(function(data,status,headers,config){
@@ -34,7 +49,7 @@
         $scope.createEmptyFlight = function(){
             var newFlight =     {
 
-                date:'',
+                date:new Date(),
                 make:'',
                 model:'',
                 TailNumber:'',
@@ -85,7 +100,7 @@
         $scope.duplicateOriginal=function(original){
             var blankFlight = $scope.createEmptyFlight();
 
-                blankFlight.date=original.date;
+                blankFlight.date=new Date(original.date);
                 blankFlight.make=original.make;
                 blankFlight.model=original.model;
                 blankFlight.TailNumber=original.TailNumber;
