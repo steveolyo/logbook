@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html ng-app="logbookapp">
+
 <head>
     <title>Logbook</title>
     <script src="../bower_components/angular/angular.js"></script>
@@ -13,7 +14,7 @@
 </head>
 <body ng-controller="LogbookController as logbook">
 <!-- Angular Material Dependencies -->
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+<!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>-->
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.min.js"></script>
 
@@ -22,16 +23,13 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.8.3/angular-material.min.js"></script>
 
 <h1>Logbook</h1>
-<md-icon md-font-icon="fa-magic" class="fa" alt="magic wand"></md-icon>
-<md-icon md-font-icon="android" alt="android"></md-icon>
-<md-button md-no-ink="" class="md-primary">Primary (md-noink)</md-button>
-<i class="material-icons">delete</i>
-<i class="material-icons">add</i>
-<i class="material-icons">edit</i>
-<i class="material-icons">duplicate</i>
+
+
 <!--http://www.dummies.com/how-to/content/using-the-div-tag-to-create-tables.html-->
 <strong>id</strong>: <%= user._id %><br>
-<strong>Total Hours</strong>: <%= totalHours %><br>
+<strong>Total Hours</strong>:{{totalHours | number:2}}<br>
+<strong>Total Entries</strong>:{{flightcounter }}<br>
+
 <div class="table">
 
     <div class="heading">
@@ -69,8 +67,8 @@
             <button ng-show="!showEdit(flight._id)" ng-click='deleteFlight(flight._id)'><i class="material-icons">delete</i></button>
             <button ng-show="!showEdit(flight._id)" ng-click='duplicateFlight(flight._id)'><i class="material-icons">content_copy</i></button>
         </div>
-        <div ng-show="!showEdit(flight._id)" class="cell"><p>{{flight.date}}</p></div>
-        <div ng-show="showEdit(flight._id)" class="celledit"><input type="text" ng-model="flight.date"/></div>
+        <div ng-show="!showEdit(flight._id)" class="cell"><p>{{flight.date | date }}</p></div>
+        <div ng-show="showEdit(flight._id)" class="celledit"><input type="date" ng-model="flight.date"/></div>
 
         <div ng-show="!showEdit(flight._id) && showModel" class="cell"><p>{{flight.make}}</p></div>
         <div ng-show="showEdit(flight._id) && showModel" class="celledit" ><input type="text" ng-model="flight.make"/></div>
@@ -116,39 +114,15 @@
         <div ng-show="showEdit(flight._id)" class="celledit"><input type="text" ng-model="flight.NumberOfNightLandings"/></div>
         <div ng-show="!showEdit(flight._id)" class="cell"><p>{{flight.TotalDurationOfFlight}}</p></div>
         <div ng-show="showEdit(flight._id)" class="celledit"><input type="text" ng-model="flight.TotalDurationOfFlight"/></div>
-        <div ng-show="!showEdit(flight._id)" class="cell"><p>{{flight.description}}</p></div>
-        <div ng-show="showEdit(flight._id)" class="celledit"><input type="text" ng-model="flight.description"/></div>
+        <div ng-show="!showEdit(flight._id)" class="cell"><p style="width:5em; font-size:10px" >{{flight.description}}</p></div>
+        <div  ng-show="showEdit(flight._id)" class="celledit"><input style="width:5em; font-size:10px" type="text" ng-model="flight.description"/></div>
     </div>
 </div>
 
 <button ng-click="addFlight()"><i class="material-icons">add</i></button>
 
 <a href="#" class="button" ng-click="addFlight()">Add Flight {{flightcounter}}</a>
-<i class="material-icons">face</i>
 
-<div>
-    <table>
-        <tr><th>Date</th><th>make/model</th><th>Identification</th><th>From</th><th>To</th>
-            <th>Single Engine</th><th>Multi-Engine</th><th>Ground Trainer</th><th>Dual Received</th>
-            <th>Pilot in Command</th><th>Day</th><th>Night</th><th>Cross Country</th><th>Acutal Instrument</th>
-            <th>Simulated Instrument</th><th>Instrument Approaches</th><th>Day Landings</th><th>Night Landings</th>
-            <th>Total Duration</th>
-            <th style=" width: 500px !important;">Description</th>
-        </tr>
-        <tr ng-repeat="flight in loggedFlight">
-            <td>{{flight.date}}</td><td>{{flight.make}}/{{flight.model}}</td>
-            <td>{{flight.TailNumber}}</td><td>{{flight.start}}</td><td>{{flight.destination}}</td>
-            <td>{{flight.SingleEngine}}</td><td>{{flight.MultiEngine}}</td><td>{{flight.GroundTrainer}}</td>
-            <td>{{flight.DualReceived}}</td><td>{{flight.PilotInCommand}}</td><td>{{flight.Day}}</td>
-            <td>{{flight.Night}}</td><td>{{flight.CrossCountry}}</td><td>{{flight.ActualInstrument}}</td>
-            <td>{{flight.SimulatedInstrument}}</td><td>{{flight.NumberOfInstrumentApproaches}}</td>
-            <td>{{flight.NumberOfDayLandings}}</td><td>{{flight.NumberOfNightLandings}}</td>
-            <td>{{flight.TotalDurationOfFlight}}</td>
-            <td style="width:5em; font-size:10px" ng-model="flight.description" >{{flight.description}}</td>
-        </tr>
-    </table>
-
-</div>
 
 
 </body>
