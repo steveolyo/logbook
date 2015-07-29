@@ -21,6 +21,7 @@
             .success(function(data,status,headers,config){
                $scope.loggedFlight = data;
                $scope.flightcounter = data.length+1;
+                var hour,flightDate;
 
                 for(i=0;i<$scope.flightcounter;i++) {
                     if ($scope.loggedFlight[i]) {
