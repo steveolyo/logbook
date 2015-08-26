@@ -17,31 +17,38 @@
         $scope.flightId;
         $scope.user;
         $scope.totalHours=0;
-        $http.get('/logbookdata')
-            .success(function(data,status,headers,config){
-               $scope.loggedFlight = data;
-               $scope.flightcounter = data.length+1;
-                var hour,flightDate;
-
-                for(i=0;i<$scope.flightcounter;i++) {
-                    if ($scope.loggedFlight[i]) {
-                        hour = $scope.loggedFlight[i].TotalDurationOfFlight;
-                        flightDate = new Date($scope.loggedFlight[i].date);
-                        $scope.loggedFlight[i].date = flightDate;
+        $scope.rowFlightId;
 
 
-                        $scope.totalHours += Number(hour);
+
+
+        $scope.refresh = function() {
+            $http.get('/logbookdata')
+                .success(function (data, status, headers, config) {
+                    $scope.loggedFlight = data;
+                    $scope.flightcounter = data.length + 1;
+                    var hour, flightDate;
+                    $scope.totalHours = 0;
+
+                    for (i = 0; i < $scope.flightcounter; i++) {
+                        if ($scope.loggedFlight[i]) {
+                            hour = $scope.loggedFlight[i].TotalDurationOfFlight;
+                            flightDate = new Date($scope.loggedFlight[i].date);
+                            $scope.loggedFlight[i].date = flightDate;
+                            //$scope.user = user;
+
+                            $scope.totalHours += Number(hour);
+                        }
                     }
-                }
 
 
+                })
+                .error(function (data, status, headers, config) {
 
+                })
 
-            })
-            .error(function(data,status,headers,config){
-
-            })
-
+        }
+        $scope.refresh();
 
         $scope.hideDate = function(){
             document.getElementById("logtable").classList.toggle("hide2")
@@ -91,6 +98,16 @@
         $scope.editField=function(id){
             //alert(id);
             $scope.flightId = id;
+        }
+        $scope.editRow=function(id){
+            $scope.rowFlightId = id;
+        }
+        $scope.showControls=function(id){
+
+            if(id == $scope.rowFlightId){
+                return true;
+            }
+            return false;
         }
         $scope.showEdit=function(id){
             if(id == $scope.flightId){
@@ -158,21 +175,37 @@
             $scope.loggedFlight.push($scope.newFlight);
             $http.post('/updateflight',{"flightData":$scope.newFlight})
                 .success(function(data,status,headers,config){
-                    $scope.loggedFlight = data;
-                    $scope.flightcounter = data.length+1;
+
+                    $scope.refresh();
+
+
                 })
                 .error(function(data,status,headers,config){
 
                 })
 
-            $scope.flightcounter++;
+
         }
         $scope.deleteFlight = function(flightNumber){
             console.log("delete "+flightNumber);
+
+
+
+
+            for(i = 0; i<$scope.loggedFlight.length;i++){
+                if ($scope.loggedFlight[i]._id == flightNumber){
+                    break;
+                }
+
+            }
+            console.log("delete"+i)
+
+            $scope.loggedFlight.splice(i,1);
             $http.post('/deleteflight',{flightNumber:flightNumber})
                 .success(function(data,status,headers,config){
                     $scope.loggedFlight = data;
                     $scope.flightcounter = data.length+1;
+                    $scope.refresh();
                 })
                 .error(function(data,status,headers,config){
                     console.log("couldn't delete");
@@ -189,6 +222,7 @@
                 .error(function(data,status,headers,config){
 
                 })
+
         }
 
         $scope.updateFlight = function(flightNumber){
@@ -198,10 +232,12 @@
             $scope.updateFlight = $scope.getObjectByID(flightNumber,$scope.loggedFlight)
 
 
+            console.log("updating ...");
+            $scope.flightId = null;
+
             $http.post('/updateflight',{"flightData":$scope.updateFlight})
                 .success(function(data,status,headers,config){
-                    $scope.loggedFlight = data;
-                    $scope.flightcounter = data.length+1;
+                   $scope.refresh();
                 })
                 .error(function(data,status,headers,config){
 

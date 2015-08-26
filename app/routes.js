@@ -69,7 +69,7 @@ module.exports = function(app, passport) {
                             response.end();
                             console.log('finit')
                         })
-                        console.log("sending json")
+                        console.log("sending json for delete")
                     }
                 }
                 catch(error){
@@ -84,6 +84,8 @@ module.exports = function(app, passport) {
     })
     app.post('/deleteflight',function(req,res){
         var flightNumber = req.body.flightNumber;
+
+        var userId = req.session.passport.user;
 
         console.log('delete flight '+flightNumber);
 
@@ -100,7 +102,8 @@ module.exports = function(app, passport) {
                     collection.removeOne({"_id":ObjectID(flightNumber)},function(){
                     });
 
-                    collection.find().sort({date:1}).toArray(function(err,docs){
+                    collection = db.collection('logData');
+                    collection.find({"userId":userId}).sort({date:1}).toArray(function(err,docs){
                         console.log("records:")
                         console.log(docs);
 
@@ -159,7 +162,7 @@ module.exports = function(app, passport) {
                     //  collection.removeOne({"_id":ObjectID(flightNumber)},function(){
                     //  });
 
-                    collection.find().sort({date:1}).toArray(function(err,docs){
+                    collection.find({"userId":userId}).sort({date:1}).toArray(function(err,docs){
 
                         res.writeHead(200, { 'Content-Type': 'application/json', "Access-Control-Allow-Origin":"*" });
                         res.write(JSON.stringify(docs));
@@ -200,6 +203,7 @@ module.exports = function(app, passport) {
             totalHours : 10
         });
     });
+
     // =====================================
     // LOGOUT ==============================
     // =====================================

@@ -34,6 +34,7 @@
 
     <div class="heading">
         <div class="headcell"><p>control</p></div>
+        <div class="headcell"><p>id</p></div>
         <div class="headcell" style="width:5em"><p>date</p></div>
         <div class="headcell"><p>make</p></div>
         <div ng-show="showModel" class="headcell"><p>model</p></div>
@@ -67,8 +68,10 @@
             <button ng-show="!showEdit(flight._id)" ng-click='deleteFlight(flight._id)'><i class="material-icons">delete</i></button>
             <button ng-show="!showEdit(flight._id)" ng-click='duplicateFlight(flight._id)'><i class="material-icons">content_copy</i></button>
         </div>
+        <div class="cell"><p>{{flight.userID}}</p></div>
+
         <div ng-show="!showEdit(flight._id)" class="cell"><p>{{flight.date | date }}</p></div>
-        <div ng-show="showEdit(flight._id)" class="celledit"><input type="date" ng-model="flight.date"/></div>
+        <div ng-show="showEdit(flight._id)" class="celledit"><input type="date" ng-model="flight.date"></div>
 
         <div ng-show="!showEdit(flight._id) && showModel" class="cell"><p>{{flight.make}}</p></div>
         <div ng-show="showEdit(flight._id) && showModel" class="celledit" ><input type="text" ng-model="flight.make"/></div>
