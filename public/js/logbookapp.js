@@ -173,17 +173,6 @@
 
             $scope.newFlight = $scope.duplicateOriginal(original);
             $scope.loggedFlight.push($scope.newFlight);
-            $http.post('/updateflight',{"flightData":$scope.newFlight})
-                .success(function(data,status,headers,config){
-
-                    $scope.refresh();
-
-
-                })
-                .error(function(data,status,headers,config){
-
-                })
-
 
         }
         $scope.deleteFlight = function(flightNumber){
