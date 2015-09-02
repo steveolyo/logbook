@@ -59,8 +59,8 @@ module.exports = function(app, passport) {
                         console.log("data for the userID:"+userId);
                         var collection = db.collection('logData');
                         collection.find({"userID":userId}).sort({date:1}).toArray(function(err,docs){
-                            console.log("records:")
-                            console.log(docs);
+                            //console.log("records:")
+                            //console.log(docs);
 
 
                             requestCount++;
@@ -69,7 +69,7 @@ module.exports = function(app, passport) {
                             response.end();
                             console.log('finit')
                         })
-                        console.log("sending json for delete")
+
                     }
                 }
                 catch(error){
@@ -104,8 +104,8 @@ module.exports = function(app, passport) {
 
                     collection = db.collection('logData');
                     collection.find({"userId":userId}).sort({date:1}).toArray(function(err,docs){
-                        console.log("records:")
-                        console.log(docs);
+                       // console.log("records:")
+                       // console.log(docs);
 
 
                         res.writeHead(200, { 'Content-Type': 'application/json', "Access-Control-Allow-Origin":"*" });

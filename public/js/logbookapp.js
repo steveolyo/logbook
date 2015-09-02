@@ -11,13 +11,14 @@
 
         $scope.showModel=true;
         $scope.showMake=true;
-        $scope.flightcounter;
-        $scope.loggedFlight;
-        $scope.newFlight;
-        $scope.flightId;
-        $scope.user;
+        $scope.flightcounter=0;
+        $scope.loggedFlight=0;
+        $scope.newFlight=0;
+        $scope.flightId=0;
+        $scope.user=0;
         $scope.totalHours=0;
-        $scope.rowFlightId;
+        $scope.rowFlightId=0;
+        $scope.flightToUpdate;
 
 
 
@@ -27,6 +28,7 @@
                 .success(function (data, status, headers, config) {
                     $scope.loggedFlight = data;
                     $scope.flightcounter = data.length + 1;
+
                     var hour, flightDate;
                     $scope.totalHours = 0;
 
@@ -60,7 +62,7 @@
                 date:new Date(),
                 make:'',
                 model:'',
-                TailNumber:'',
+                TaiNumber:'',
                 Origin:'',
                 Destination:'',
                 OtherAirports:[],
@@ -121,7 +123,7 @@
                 blankFlight.date=new Date(original.date);
                 blankFlight.make=original.make;
                 blankFlight.model=original.model;
-                blankFlight.TailNumber=original.TailNumber;
+                blankFlight.TaiNumber=original.TaiNumber;
                 blankFlight.Origin=original.Origin;
                 blankFlight.Destination=original.Destination;
                 blankFlight.OtherAirports=original.OtherAirports;
@@ -167,12 +169,27 @@
             }
 
         }
+        $scope.indexOfFlight = function(flightId){
+
+
+            var loopi;
+            for(loopi = 0; loopi<$scope.loggedFlight.length;loopi++){
+                if($scope.loggedFlight[loopi]._id == flightId){
+                    return loopi + 1;
+                }
+
+            }
+            return 0;
+
+        }
         $scope.duplicateFlight = function(flightNumber){
 
             var original = getFlightById(flightNumber);
 
+            var indexOfOriginal = $scope.indexOfFlight(flightNumber);
+
             $scope.newFlight = $scope.duplicateOriginal(original);
-            $scope.loggedFlight.push($scope.newFlight);
+            $scope.loggedFlight.splice(indexOfOriginal,0,$scope.newFlight);
 
         }
         $scope.deleteFlight = function(flightNumber){
@@ -218,15 +235,20 @@
 
 
             // get object from group by ID
-            $scope.updateFlight = $scope.getObjectByID(flightNumber,$scope.loggedFlight)
+            $scope.flightToUpdate = $scope.getObjectByID(flightNumber,$scope.loggedFlight)
 
 
             console.log("updating ...");
+            //set id to null so the edit for that row won't show up.
             $scope.flightId = null;
 
-            $http.post('/updateflight',{"flightData":$scope.updateFlight})
+            $http.post('/updateflight',{"flightData":$scope.flightToUpdate})
                 .success(function(data,status,headers,config){
-                   $scope.refresh();
+                    console.log("updated");
+                    $scope.loggedFlight = data;
+                    $scope.flightcounter = data.length+1;
+                    $scope.refresh();
+
                 })
                 .error(function(data,status,headers,config){
 
