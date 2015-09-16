@@ -26,15 +26,16 @@
 
 
 <!--http://www.dummies.com/how-to/content/using-the-div-tag-to-create-tables.html-->
-<strong>id</strong>: <%= user._id %><br>
+
 <strong>Total Hours</strong>:{{totalHours | number:2}}<br>
 <strong>Total Entries</strong>:{{flightcounter }}<br>
+<button  ng-click='backupFlight()' ><i class="material-icons">archive</i>Store to Local</button>
 
 <div class="table">
 
     <div class="heading">
         <div class="headcell"><p>control</p></div>
-        <div class="headcell"><p>id</p></div>
+        <!--<div class="headcell"><p>id</p></div>-->
         <div class="headcell" style="width:5em"><p>date</p></div>
         <div class="headcell"><p>make</p></div>
         <div ng-show="showModel" class="headcell"><p>model</p></div>
@@ -61,14 +62,14 @@
 
 
 
-    <div ng-repeat="flight in loggedFlight" class="row",>
+    <div  ng-click="editRow(flight._id)" ng-repeat="flight in loggedFlight" class="row",>
         <div class="cell">
-            <button ng-show="!showEdit(flight._id)" ng-click="editField(flight._id)"  >    <i class="material-icons">edit</i></button>
+            <button ng-show="showControls(flight._id) && !showEdit(flight._id)" ng-click="editField(flight._id)"  >    <i class="material-icons">edit</i></button>
             <button ng-show="showEdit(flight._id)" ng-click='updateFlight(flight._id)' ><i class="material-icons">archive</i></button>
-            <button ng-show="!showEdit(flight._id)" ng-click='deleteFlight(flight._id)'><i class="material-icons">delete</i></button>
-            <button ng-show="!showEdit(flight._id)" ng-click='duplicateFlight(flight._id)'><i class="material-icons">content_copy</i></button>
+                <button ng-show="showControls(flight._id)&& !showEdit(flight._id)" ng-click='deleteFlight(flight._id)'><i class="material-icons">delete</i></button>
+            <button ng-show="showControls(flight._id) && !showEdit(flight._id)" ng-click='duplicateFlight(flight._id)'><i class="material-icons">content_copy</i></button>
         </div>
-        <div class="cell"><p>{{flight.userID}}</p></div>
+        <!--<div class="cell"><p>{{flight.userID}}</p></div>-->
 
         <div ng-show="!showEdit(flight._id)" class="cell"><p>{{flight.date | date }}</p></div>
         <div ng-show="showEdit(flight._id)" class="celledit"><input type="date" ng-model="flight.date"></div>

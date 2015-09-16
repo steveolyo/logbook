@@ -254,7 +254,25 @@
 
                 })
         }
+        $scope.backupFlight = function(){
 
+
+            // get object from group by ID
+
+            console.log("updating ...");
+            //set id to null so the edit for that row won't show up.
+            $scope.flightId = null;
+
+            $http.post('/backuplocal',{"allFlights":$scope.loggedFlight})
+                .success(function(data,status,headers,config){
+                    console.log("backuped");
+
+
+                })
+                .error(function(data,status,headers,config){
+
+                })
+        }
 
 
     });
