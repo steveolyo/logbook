@@ -16,9 +16,27 @@
         $scope.newFlight=0;
         $scope.flightId=0;
         $scope.user=0;
+
+        $scope.totalDual =0;
+        $scope.totalPIC = 0;
+        $scope.totalMultiEngine=0;
+        $scope.totalSingleEngine=0;
+        $scope.totalDayFlight=0;
+        $scope.totalNightFlight=0;
         $scope.totalHours=0;
+        $scope.totalDayLandings = 0;
+        $scope.totalNightLandings = 0;
+        $scope.totalCrossCountry = 0;
+        $scope.totalSimulatedInstrument = 0;
+        $scope.totalActualInstrument = 0;
+        $scope.totalInstrumentApproaches = 0;
+        $scope.totalGround = 0;
+
         $scope.rowFlightId=0;
         $scope.flightToUpdate;
+        $scope.multiEngineClass="cell";
+        $scope.multiEngineHeader="headcell";
+
 
 
 
@@ -30,16 +48,80 @@
                     $scope.flightcounter = data.length + 1;
 
                     var hour, flightDate;
+                    var daylandingCount;
+                    var nightLandingCount;
+                    var crossCountry;
+                    var multi;
+                    var single;
+                    var ground;
+                    var instrumentApproaches;
+
                     $scope.totalHours = 0;
 
                     for (i = 0; i < $scope.flightcounter; i++) {
                         if ($scope.loggedFlight[i]) {
+
+                            crossCountry = $scope.loggedFlight[i].CrossCountry;
                             hour = $scope.loggedFlight[i].TotalDurationOfFlight;
                             flightDate = new Date($scope.loggedFlight[i].date);
+                            daylandingCount = $scope.loggedFlight[i].NumberOfDayLandings;
+                            nightLandingCount = $scope.loggedFlight[i].NumberOfNightLandings;
+                            dayflight = $scope.loggedFlight[i].Day;
+                            nightflight = $scope.loggedFlight[i].Night;
+                            actualInstrument = $scope.loggedFlight[i].ActualInstrument;
+                            simulatedInstrument = $scope.loggedFlight[i].SimulatedInstrument;
+                            dual = $scope.loggedFlight[i].DualReceived;
+                            pic = $scope.loggedFlight[i].PilotInCommand;
+                            single = $scope.loggedFlight[i].SingleEngine;
+                            multi = $scope.loggedFlight[i].MultiEngine;
+                            instrumentApproaches = $scope.loggedFlight[i].NumberOfInstrumentApproaches;
+                            ground = $scope.loggedFlight[i].GroundTrainer;
+
                             $scope.loggedFlight[i].date = flightDate;
                             //$scope.user = user;
 
-                            $scope.totalHours += Number(hour);
+                            if (!isNaN(ground)) {
+                                $scope.totalGround += Number(ground);
+                            }
+                            if (!isNaN(instrumentApproaches)) {
+                                $scope.totalInstrumentApproaches += Number(instrumentApproaches);
+                            }
+                            if (!isNaN(multi)) {
+                                $scope.totalMultiEngine += Number(multi);
+                            }
+                            if (!isNaN(single)) {
+                                $scope.totalSingleEngine += Number(single);
+                            }
+                            if (!isNaN(pic)) {
+                                $scope.totalPIC += Number(pic);
+                            }
+                            if (!isNaN(dual)) {
+                                $scope.totalDual += Number(dual);
+                            }
+                            if (!isNaN(nightflight)) {
+                                $scope.totalNightFlight += Number(nightflight);
+                            }
+                            if (!isNaN(dayflight)) {
+                                $scope.totalDayFlight += Number(dayflight);
+                            }
+                            if (!isNaN(simulatedInstrument)) {
+                                $scope.totalSimulatedInstrument += Number(simulatedInstrument);
+                            }
+                            if (!isNaN(actualInstrument)) {
+                                $scope.totalActualInstrument += Number(actualInstrument);
+                            }
+                            if (!isNaN(crossCountry)) {
+                                $scope.totalCrossCountry += Number(crossCountry);
+                            }
+                            if (!isNaN(hour)) {
+                                $scope.totalHours += Number(hour);
+                            }
+                            if (!isNaN(nightLandingCount)) {
+                                $scope.totalNightLandings += Number(nightLandingCount);
+                            }
+                            if (!isNaN(daylandingCount)) {
+                                $scope.totalDayLandings += Number(daylandingCount);
+                            }
                         }
                     }
 
@@ -253,6 +335,11 @@
                 .error(function(data,status,headers,config){
 
                 })
+        }
+        $scope.hideMultiEngine = function(){
+            $scope.multiEngineClass = "multiEngineClass";
+            $scope.multiEngineHeader = "hideCol";
+
         }
         $scope.backupFlight = function(){
 
