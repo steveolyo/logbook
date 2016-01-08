@@ -35,6 +35,15 @@ body { display: table; table-layout: fixed;}
     padding:0;
     margin:0;
 }
+.hideCol{
+    display:none;
+}
+.multiEngineClass{
+    color:red;
+    font-weight:bold;
+    display:none;
+
+}
 .foo{color:red}
 .cell,.celledit,.headcell
 {
