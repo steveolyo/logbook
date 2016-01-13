@@ -27,7 +27,7 @@
 
 <!--http://www.dummies.com/how-to/content/using-the-div-tag-to-create-tables.html-->
 
-<strong>Total Hours</strong>:{{totalHours | number:2}}<br>
+<strong>Total Hours</strong>:{{totalHours | number:1}}<br>
 <strong>Total Entries</strong>:{{flightcounter }}<br>
 <button  ng-click='backupFlight()' ><i class="material-icons">archive</i>Store to Local</button>
 
@@ -42,20 +42,20 @@
         <div class="headcell"><p>Ident.</p></div>
         <div class="headcell"><p>From</p></div>
         <div class="headcell"><p>To</p></div>
-        <div class="headcell"><p>Single Engine</p></div>
-        <div class="headcell"><p>Multi Engine</p></div>
-        <div class="headcell"><p>Ground Trainer</p></div>
-        <div class="headcell"><p>Dual Received</p></div>
-        <div class="headcell"><p>Pilot In Command</p></div>
-        <div class="headcell"><p>Day</p></div>
-        <div class="headcell"><p>Night</p></div>
-        <div class="headcell"><p>Cross Country</p></div>
-        <div class="headcell"><p>Actual Instrument</p></div>
-        <div class="headcell"><p>Simulated Instrument</p></div>
-        <div class="headcell"><p>Number Of Instrument Approaches</p></div>
-        <div class="headcell"><p>Number Of Day Landings</p></div>
-        <div class="headcell"><p>Number Of Night Landings</p></div>
-        <div class="headcell"><p>Total Duration of Flight</p></div>
+        <div class="headcell"><p>Single Engine<br/>({{totalSingleEngine | number:1}})</p></div>
+        <div ng-click="hideMultiEngine()" ng-class="multiEngineHeader"><p>Multi Engine<br/>({{totalMultiEngine | number:1}})</p></div>
+        <div class="headcell"><p>Ground Trainer<br/>({{totalGround | number:1}})</p></div>
+        <div class="headcell"><p>Dual Received<br/>({{totalDual | number:1}})</p></div>
+        <div class="headcell"><p>Pilot In Command<br/>({{totalPIC | number:1}})</p></div>
+        <div class="headcell"><p>Day<br/>({{totalDayFlight | number:1}})</p></div>
+        <div class="headcell"><p>Night<br/>({{totalNightFlight | number:1}})</p></div>
+        <div class="headcell"><p>Cross Country <br/>({{totalCrossCountry | number:1}})</p></div>
+        <div class="headcell"><p>Actual Instrument<br/>({{totalActualInstrument | number:1}})</p></div>
+        <div class="headcell"><p>Simulated Instrument<br/>({{totalSimulatedInstrument | number:1}})</p></div>
+        <div class="headcell"><p>Number Of Instrument Approaches<br/>({{totalInstrumentApproaches | number}}) </p></div>
+        <div class="headcell"><p>Number Of Day Landings <br/>({{totalDayLandings | number }})</p></div>
+        <div class="headcell"><p>Number Of Night Landings <br/>({{totalNightLandings | number }})</p></div>
+        <div class="headcell"><p>Total Duration of Flight {{totalHours | number:1}}</p></div>
         <div class="headcell"><p>Description</p></div>
     </div>
 
@@ -89,12 +89,12 @@
         <div ng-show="!showEdit(flight._id)" class="cell"><p>{{flight.Destination}}</p></div>
         <div ng-show="showEdit(flight._id)" class="celledit"><input type="text" ng-model="flight.Destination"/></div>
 
-        <div ng-show="!showEdit(flight._id)" class="cell"><p>{{flight.SingleEngine}}</p></div>
+        <div ng-click="" ng-show="!showEdit(flight._id)" class="cell"><p>{{flight.SingleEngine}}</p></div>
         <div ng-show="showEdit(flight._id)" class="celledit"><input type="text" ng-model="flight.SingleEngine"/></div>
 
-        <div ng-show="!showEdit(flight._id)" class="cell"><p>{{flight.MultiEngine}}</p></div>
+        <div ng-show="!showEdit(flight._id)" ng-class="multiEngineClass" ><p>{{flight.MultiEngine}}</p></div>
         <div ng-show="showEdit(flight._id)" class="celledit"><input type="text" ng-model="flight.MultiEngine"/></div>
-        <div ng-show="!showEdit(flight._id)" class="cell"><p>{{flight.GroundTrainer}}</p></div>
+        <div ng-show="!showEdit(flight._id)" ng-class="multiEnginClass" class="cell"><p>{{flight.GroundTrainer}}</p></div>
         <div ng-show="showEdit(flight._id)" class="celledit"><input type="text" ng-model="flight.GroundTrainer"/></div>
         <div ng-show="!showEdit(flight._id)" class="cell"><p>{{flight.DualReceived}}</p></div>
         <div ng-show="showEdit(flight._id)" class="celledit"><input type="text" ng-model="flight.DualReceived"/></div>
